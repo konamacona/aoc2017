@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	fmt.Printf("%d\n", ManDist(265149))
+	fmt.Println(ManDist(265149))
+	fmt.Println(Part2(265149))
 }
 
 func ManDist(input int) int {
@@ -31,15 +34,34 @@ func ManDist(input int) int {
 	// The distance from a corner to a center
 	halfSide := (side - 1) / 2
 
-	// 	fmt.Printf(`input: %d
-	// 	layer: %d
-	// 	side: %d
-	// 	bottomRight: %d
-	// 	progress: %d
-	// 	halfSide: %d
-	// `, input, layers, side, bottomRight, progress, halfSide)
-
 	return (layers - 1) + Abs((progress%(side-1))-halfSide)
+}
+
+func Part2(input int) int {
+	s := NewSpiral()
+	s.SetCurrent(1)
+
+	for {
+		s.Next()
+		val := GetSurroundingSum(s)
+		s.SetCurrent(val)
+
+		if val > input {
+			return val
+		}
+	}
+}
+
+func GetSurroundingSum(s *Spiral) int {
+	result := 0
+	for iX := s.x - 1; iX <= (s.x + 1); iX++ {
+		for iY := s.y - 1; iY <= (s.y + 1); iY++ {
+			if !(iX == s.x && iY == s.y) {
+				result += s.Get(iX, iY)
+			}
+		}
+	}
+	return result
 }
 
 func Abs(input int) int {
