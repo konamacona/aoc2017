@@ -17,7 +17,6 @@ func main() {
 		tokens := strings.Split(input, "\t")
 		var values = make([]int, len(tokens))
 		for i, t := range tokens {
-			fmt.Println(t)
 			value, err := strconv.Atoi(t)
 			if err != nil {
 				log.Fatal("ERROR: Unable to parse input")
